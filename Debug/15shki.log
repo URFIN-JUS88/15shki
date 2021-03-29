@@ -1,0 +1,3 @@
+﻿  15shki.cpp
+C:\Users\student\source\repos\Urfin Jus\TestWork\15shki\15shki\15shki.cpp(52,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  15shki.vcxproj -> C:\Users\student\source\repos\Urfin Jus\TestWork\15shki\15shki\Debug\15shki.exe
