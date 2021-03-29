@@ -8,19 +8,23 @@ void show_pole(int pole[], const int size);
 void mix_pole(int pole[], const int size);
 void move(int pole[], const int size);
 void winTest(int pole[], const int size);
+void menu(int action);
+void count_hods(int count_hod);
 int main() {
-	//int count = 0;
+	int count_hod = 0;
 	setlocale(LC_ALL, "rus");
 	const int size = 16;
 	int pole[size] = {};
 	create_pole(pole, size);
-	show_pole(pole, size);
+	//show_pole(pole, size);
 	mix_pole(pole, size);
 	show_pole(pole, size);
 	do {
 		//count++;
 		move(pole, size);
 		show_pole(pole, size);
+		count_hods(count_hod);
+		winTest(pole, size);
 	} while (true);
 	
 }
@@ -131,4 +135,12 @@ void winTest(int pole[], const int size) {
 	if (count == size - 1) {
 		cout << "You Win!!!";
 	}
+}
+void menu(int action) {
+	cout << "1. Начать игру 4x4" << endl;
+	cout << "2. Начать игру 3x3" << endl;
+}
+void count_hods(int count_hod) {
+	count_hod++;
+	cout<< count_hod;
 }
