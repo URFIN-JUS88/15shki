@@ -3,37 +3,35 @@
 #include<cstdlib>
 #include <conio.h>
 using namespace std;
-void create_pole(int pole[], const int size);
-void show_pole(int pole[], const int size);
-void mix_pole(int pole[], const int size);
-void move(int pole[], const int size);
-void winTest(int pole[], const int size);
-void menu(int action);
+void game(int pole[], int size, int count_hod);
+void create_pole(int pole[], int size);
+void show_pole(int pole[], int size);
+void mix_pole(int pole[], int size);
+void move(int pole[], int size);
+int winTest(int pole[], int size);
+int menu1(int size);
 void count_hods(int count_hod);
 int main() {
-	int count_hod = 0;
 	setlocale(LC_ALL, "rus");
-	const int size = 16;
-	int pole[size] = {};
+	int count_hod = 0;
+	int size=16;
+	int* pole;
+	size=menu1(size);
+	pole = new int[size];
 	create_pole(pole, size);
-	//show_pole(pole, size);
 	mix_pole(pole, size);
 	show_pole(pole, size);
 	do {
-		//count++;
-		move(pole, size);
-		show_pole(pole, size);
-		count_hods(count_hod);
-		winTest(pole, size);
-	} while (true);
+		game(pole, size, count_hod);
+	} while (winTest(pole,size)==0);
 	
 }
-void create_pole(int pole[], const int size) {
+void create_pole(int pole[], int size) {
 	for (int i = 0; i < size; i++) {
 		pole[i] = i;
 	}
 }
-void show_pole(int pole[], const int size) {
+void show_pole(int pole[], int size) {
 	system("cls");
 	for (int i = 0; i < sqrt(size); i++) {
 		for (int j = 0; j < sqrt(size); j++) {
@@ -51,7 +49,7 @@ void show_pole(int pole[], const int size) {
 		cout << endl;
 	}
 }
-void mix_pole(int pole[], const int size) {
+void mix_pole(int pole[], int size) {
 	int temp;
 	srand(time(0));
 	for (int i = 0; i < size; i++) {
@@ -61,7 +59,7 @@ void mix_pole(int pole[], const int size) {
 		pole[random] = temp;
 	}
 }
-void move(int pole[], const int size) {
+void move(int pole[], int size) {
 	int index=0, temp=0;
 	int key;
 	for (int i = 0; i < size; i++) {
@@ -76,10 +74,10 @@ void move(int pole[], const int size) {
 	switch (key)// up=72;left=75;right=77;down=80;
 	{
 	case 80:
-		if (index - 4 >= 0) {
+		if (index - (int)sqrt(size) >= 0) {
 			temp = pole[index];
-			pole[index] = pole[index - 4];
-			pole[index - 4] = temp;
+			pole[index] = pole[index - (int)sqrt(size)];
+			pole[index - (int)sqrt(size)] = temp;
 		}
 		else {
 			cout << "Неверный ход!! Попробуйте еще раз";
@@ -87,7 +85,7 @@ void move(int pole[], const int size) {
 		}
 		break;
 	case 77:
-		if (index - 1 < 0 || index - 1 == 3 || index - 1 == 7 || index - 1 == 11) {
+		if (index - 1 < 0 || index - 1 == (int)sqrt(size)-1 || index - 1 == 2*(int)sqrt(size)-1 || index - 1 == 3*(int)sqrt(size)-1) {
 			cout << "Неверный ход!! Попробуйте еще раз";
 			move(pole, size);
 		}
@@ -98,7 +96,7 @@ void move(int pole[], const int size) {
 		}
 		break;
 	case 75:
-		if (index + 1 > size-1 || index + 1 == 4 || index + 1 == 8 || index + 1 == 12) {
+		if (index + 1 > size-1 || index + 1 == (int)sqrt(size) || index + 1 == 2*(int)sqrt(size) || index + 1 == 3*(int)sqrt(size)) {
 			cout << "Неверный ход!! Попробуйте еще раз";
 			move(pole, size);
 		}
@@ -109,10 +107,10 @@ void move(int pole[], const int size) {
 		}
 		break;
 	case 72:
-		if (index + 4 <= size-1) {
+		if (index + (int)sqrt(size) <= size-1) {
 			temp = pole[index];
-			pole[index] = pole[index + 4];
-			pole[index + 4] = temp;
+			pole[index] = pole[index + (int)sqrt(size)];
+			pole[index + (int)sqrt(size)] = temp;
 		}
 		else {
 			cout << "Неверный ход!! Попробуйте еще раз";
@@ -125,7 +123,7 @@ void move(int pole[], const int size) {
 		break;
 	}
 }
-void winTest(int pole[], const int size) {
+int winTest(int pole[], int size) {
 	int count = 0;
 	for (int i = 0; i < size-1; i++) {
 		if (pole[i] == i) {
@@ -134,13 +132,38 @@ void winTest(int pole[], const int size) {
 	}
 	if (count == size - 1) {
 		cout << "You Win!!!";
+		return 1;
+	}
+	else {
+		return 0;
 	}
 }
-void menu(int action) {
+int menu1(int size) {
+	int action;
 	cout << "1. Начать игру 4x4" << endl;
 	cout << "2. Начать игру 3x3" << endl;
+	cin >> action;
+	switch (action)
+	{
+	case 1:
+		size = 16;
+		break;
+	case 2:
+		size = 9;
+		break;
+	default:
+		cout << "Выберите режим игры" << endl;
+		menu1(size);
+	}
+	return size;
 }
 void count_hods(int count_hod) {
 	count_hod++;
-	cout<< count_hod;
+	cout<< count_hod<<endl;
+}
+void game(int pole[], int size, int count_hod) {
+	move(pole, size);
+	show_pole(pole, size);
+	count_hods(count_hod);
+	//winTest(pole, size);
 }
