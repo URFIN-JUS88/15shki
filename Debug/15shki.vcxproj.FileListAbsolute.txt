@@ -4,3 +4,4 @@ C:\Users\student\source\repos\Urfin Jus\15shki\Debug\15shki.exe
 C:\Users\student\source\repos\Urfin Jus\15shki\Debug\15shki.pdb
 C:\Users\student\source\repos\Urfin Jus\TestWork\15shki\15shki\Debug\15shki.exe
 C:\Users\student\source\repos\Urfin Jus\TestWork\15shki\15shki\Debug\15shki.pdb
+D:\Академия ШАГ\С++\Экзамен\15shki\Debug\15shki.exe
