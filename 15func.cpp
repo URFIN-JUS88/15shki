@@ -123,7 +123,7 @@ int winTest(int pole[], int size) {
 		return 0;
 	}
 }
-int menu1() {
+void menu1(int* size) {
 	int action;
 	cout << "1. Начать игру 4x4" << endl;
 	cout << "2. Начать игру 3x3" << endl;
@@ -131,17 +131,56 @@ int menu1() {
 	switch (action)
 	{
 	case 1:
-		return 16;
+		*size = 16;
 		break;
 	case 2:
-		return 9;
+		*size = 9;
 		break;
 	default:
 		cout << "Выберите режим игры" << endl;
-		menu1();
+		menu1(size);
 	}
 }
+int menu2(int(*ptr_15shki)()) {
+	char action;
+	cout << "Хотите сыграть еще раз? (Y/N)";
+	cin >> action;
+	switch (action)
+	{
+	case 'Y'|'y':
+		ptr_15shki();
+		break;
+	case 'N'|'n':
+		return 0;
+		break;
+	}
+	
+
+}
 void counter(int* count_move) {
-	count_move++;
-	//cout << *ptr_count_move << endl;
+	(*count_move)++;
+	cout <<"Количество ходов:"<< *count_move << endl;
+}
+void start_timer(clock_t* start) {
+	*start = clock();
+}
+void stop_timer(clock_t* stop) {
+	*stop = clock();
+}
+void show_timer(clock_t* start, clock_t* stop) {
+	int min, sec;
+	min = ((*stop - *start) / CLK_TCK) / 60;
+	sec = ((*stop - *start) / CLK_TCK) % 60;
+	if (min<10&&sec<10){
+		cout << "Затрачено времени: " <<"0"<< ((*stop - *start) / CLK_TCK) / 60 << ":"<<"0" << ((*stop - *start) / CLK_TCK) % 60 << endl;
+	}
+	else if (min < 10 && sec >= 10) {
+		cout << "Затрачено времени: " << "0" << ((*stop - *start) / CLK_TCK) / 60 << ":" << ((*stop - *start) / CLK_TCK) % 60 << endl;
+	}
+	else if (min >= 10 && sec < 10) {
+		cout << "Затрачено времени: " << ((*stop - *start) / CLK_TCK) / 60 << ":" << "0" << ((*stop - *start) / CLK_TCK) % 60 << endl;
+	}
+	else if (min >= 10 && sec >= 10) {
+		cout << "Затрачено времени: " << ((*stop - *start) / CLK_TCK) / 60 << ":" << ((*stop - *start) / CLK_TCK) % 60 << endl;
+	}
 }
